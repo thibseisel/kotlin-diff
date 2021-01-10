@@ -21,40 +21,6 @@ public class Patch<T>(estimatedPatchSize: Int) {
         get() = _deltas
 
     /**
-     * Apply this patch to the given target.
-     *
-     * @return The patched text.
-     */
-    public fun applyTo(target: List<T>): List<T> {
-        val result = target.toMutableList()
-        val it = _deltas.listIterator(_deltas.size)
-        while (it.hasPrevious()) {
-            val delta = it.previous()
-            delta.applyTo(result)
-        }
-
-        return result
-    }
-
-    /**
-     * Restore the text to original.
-     * Opposite to [applyTo].
-     *
-     * @param target The given target.
-     * @return The restored text.
-     */
-    public fun restore(target: List<T>): List<T> {
-        val result = target.toMutableList()
-        val it = _deltas.listIterator(_deltas.size)
-        while (it.hasPrevious()) {
-            val delta = it.previous()
-            delta.restore(result)
-        }
-
-        return result
-    }
-
-    /**
      * Add the given delta to this patch.
      */
     internal fun addDelta(delta: Delta<T>) {
